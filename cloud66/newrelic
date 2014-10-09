@@ -1,4 +1,4 @@
-if [ -s /etc/apt/sources.list.d/newrelic.list]
+if [ -s /etc/apt/sources.list.d/newrelic.list ]
 then
         rm -f /etc/apt/sources.list.d/newrelic.list
         echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
