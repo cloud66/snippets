@@ -1,9 +1,9 @@
 if [ -s /etc/apt/sources.list.d/newrelic.list ]
 then
         rm -f /etc/apt/sources.list.d/newrelic.list
-        echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
+        echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
 else
-        echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
+        echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
 fi
 wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
 apt-get update
