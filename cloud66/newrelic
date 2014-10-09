@@ -1,12 +1,12 @@
 if [ -s /etc/apt/sources.list.d/newrelic.list ]
 then
-        rm -f /etc/apt/sources.list.d/newrelic.list
-        echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
+        sudo rm -f /etc/apt/sources.list.d/newrelic.list
+        sudo echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
 else
-        echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
+        sudo echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
 fi
-wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
-apt-get update
-apt-get install newrelic-sysmond
-nrsysmond-config --set license_key=$NEWRELIC_KEY
-/etc/init.d/newrelic-sysmond start
+sudo wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install newrelic-sysmond
+sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
+sudo /etc/init.d/newrelic-sysmond start
