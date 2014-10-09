@@ -8,5 +8,11 @@ fi
 sudo wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install newrelic-sysmond
-sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
-sudo /etc/init.d/newrelic-sysmond start
+if [ -z "$NEWRELIC_KEY" ]
+then
+        echo "Please set your $NEWRELIC_KEY environment variable"
+        exit 1
+else
+        sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
+        sudo /etc/init.d/newrelic-sysmond start
+fi
