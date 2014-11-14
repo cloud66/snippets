@@ -1,13 +1,15 @@
 cd /tmp
 wget http://nginx.org/download/nginx-1.6.1.tar.gz
+mkdir nginx
 tar xvzf nginx-1.6.1.tar.gz -C /tmp/nginx
 if [ -z "$MODULE_URL" ]
 then
     >&2 echo "Please set your $MODULE_URL environment variable"
     exit 1
 else
-	wget -O module.tar.gz $MODULE_URL
+	sudo wget -O module.tar.gz $MODULE_URL
 fi
+mkdir module_folder
 tar xvzf module.tar.gz -C /tmp/module_folder
 sudo gem install passenger
 sudo passenger-install-nginx-module --auto --auto-download --prefix=/opt/nginx --extra-configure-flags='--with-http_realip_module --add-module=/tmp/module_folder/'
