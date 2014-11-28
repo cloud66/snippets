@@ -1,3 +1,5 @@
+# {{Description: This deploy hook snippet is a script that automates the installation of NewRelic, and requires the NEWRELIC_KEY environment variable to be set on a stack.}} 
+
 if [ -s /etc/apt/sources.list.d/newrelic.list ]
 then
         sudo rm -f /etc/apt/sources.list.d/newrelic.list
