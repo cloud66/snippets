@@ -1,2 +1,4 @@
+# {{Description: This deploy hook snippet is a script that automates the removal of unneeded gems from your servers (bundle clean).}} 
+
 cd $STACK_PATH
 bundle clean
