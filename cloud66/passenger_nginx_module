@@ -1,3 +1,5 @@
+# {{Description: This deploy hook snippet is a script that automates the recompilation of Passenger with Nginx together with a module specified with the MODULE_URL environment variable.}} 
+
 cd /tmp
 wget -O nginx.tar.gz http://nginx.org/download/nginx-1.6.1.tar.gz
 mkdir -p nginx
