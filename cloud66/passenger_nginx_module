@@ -1,17 +1,17 @@
 # {{Description: This deploy hook snippet is a script that automates the recompilation of Passenger with Nginx together with a module specified with the MODULE_URL environment variable.}} 
 
-cd /tmp
-wget -O nginx.tar.gz http://nginx.org/download/nginx-1.6.1.tar.gz
-mkdir -p nginx
-tar xvzf nginx.tar.gz -C /tmp/nginx --strip 1
+cd /usr/local/src
+sudo wget -O nginx.tar.gz http://nginx.org/download/nginx-1.6.2.tar.gz
+sudo mkdir -p /usr/local/build/nginx-1.6.2
+sudo tar xvzf nginx.tar.gz -C /usr/local/build/nginx-1.6.2 --strip 1
 if [ -z "$MODULE_URL" ]
 then
     >&2 echo "Please set your $MODULE_URL environment variable"
     exit 1
 else
-	sudo wget -O module.tar.gz $MODULE_URL
+    sudo wget -O /usr/local/src/module.tar.gz $MODULE_URL
 fi
-mkdir module_folder
-tar xvzf module.tar.gz -C /tmp/module_folder --strip 1
+sudo mkdir -p /usr/local/build/module_folder
+sudo tar xvzf /usr/local/src/module.tar.gz -C /usr/local/build/module_folder --strip 1
 sudo gem install passenger
-sudo passenger-install-nginx-module --auto --auto-download --prefix=/opt/nginx --extra-configure-flags='--with-http_realip_module --add-module=/tmp/module_folder/'
+sudo passenger-install-nginx-module --auto --nginx-source-dir=/usr/local/build/nginx-1.6.2 --prefix=/opt/nginx --extra-configure-flags='--with-http_realip_module --add-module=/usr/local/build/module_folder'
