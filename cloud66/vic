@@ -1,0 +1,20 @@
+# {{Description: This deploy hook snippet is a script that automates the installation of NewRelic, and requires the NEWRELIC_KEY environment variable to be set on a stack.}} 
+
+if [ -s /etc/apt/sources.list.d/newrelic.list ]
+then
+        sudo rm -f /etc/apt/sources.list.d/newrelic.list
+        echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
+else
+        echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
+fi
+sudo wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
+sudo apt-get update -y
+sudo apt-get install newrelic-sysmond -y
+if [ -z "$NEWRELIC_KEY" ]
+then
+        >&2 echo "Please set your $NEWRELIC_KEY environment variable"
+        exit 1
+else
+        sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
+        sudo /etc/init.d/newrelic-sysmond start
+fi
