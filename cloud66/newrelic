@@ -12,7 +12,7 @@ sudo apt-get update -y
 sudo apt-get install newrelic-sysmond -y
 if [ -z "$NEWRELIC_KEY" ]
 then
-        echo "Please set your $NEWRELIC_KEY environment variable"
+        >&2 echo "Please set your $NEWRELIC_KEY environment variable"
         exit 1
 else
         sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
