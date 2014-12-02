@@ -1,7 +1,7 @@
 # {{Description: This deploy hook snippet is a script that automates the installation of NewRelic, and requires the NEWRELIC_KEY environment variable to be set on a stack.}} 
 if [ -z "$NEWRELIC_KEY" ]
 then
-        >&2 echo "Please set your NEWRELIC_KEY environment variable"
+        >&2 echo "This snippet requires the environment variable NEWRELIC_KEY to be set"
         exit 1
 else
         if [ -s /etc/apt/sources.list.d/newrelic.list ]
