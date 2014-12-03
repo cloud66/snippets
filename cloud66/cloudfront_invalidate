@@ -6,38 +6,42 @@
   require 'net/https'
   require 'base64'
 
-  s3_access = ENV['S3_ACCESS_KEY']
-  s3_secret = ENV['S3_SECRET_KEY']
-  cf_distribution = ENV['CLOUDFRONT_DISTRIBUTION_ID']
-
-  if ENV['AWS_PATH'].nil?
-    paths = "<Path>/</Path>"
+  if ENV['S3_ACCESS_KEY'].nil? || ENV['S3_SECRET_KEY'].nil? || ENV['CLOUDFRONT_DISTRIBUTION_ID'].nil?
+  	abort("Please set your environment variables to continue.")
   else
-    path = ENV['AWS_PATH'].split(/,/)
-    paths = '<Path>/' + path.join('</Path><Path>/') + '</Path>'
-  end
+	  s3_access = ENV['S3_ACCESS_KEY']
+	  s3_secret = ENV['S3_SECRET_KEY']
+	  cf_distribution = ENV['CLOUDFRONT_DISTRIBUTION_ID']
 
-  date = Time.now.utc
-  date = date.strftime("%a, %d %b %Y %H:%M:%S %Z")
-  digest = HMAC::SHA1.new(s3_secret)
-  digest << date
+	  if ENV['AWS_PATH'].nil?
+	    paths = "<Path>/</Path>"
+	  else
+	    path = ENV['AWS_PATH'].split(/,/)
+	    paths = '<Path>/' + path.join('</Path><Path>/') + '</Path>'
+	  end
 
-  uri = URI.parse('https://cloudfront.amazonaws.com/2010-08-01/distribution/' + cf_distribution + '/invalidation')
+	  date = Time.now.utc
+	  date = date.strftime("%a, %d %b %Y %H:%M:%S %Z")
+	  digest = HMAC::SHA1.new(s3_secret)
+	  digest << date
 
-  req = Net::HTTP::Post.new(uri.path)
-  req.initialize_http_header({
-    'x-amz-date' => date,
-    'Content-Type' => 'text/xml',
-    'Authorization' => "AWS %s:%s" % [s3_access, Base64.encode64(digest.digest)]
-  })
+	  uri = URI.parse('https://cloudfront.amazonaws.com/2010-08-01/distribution/' + cf_distribution + '/invalidation')
 
-  req.body = "<InvalidationBatch>" + paths + "<CallerReference>ref_#{Time.now.utc.to_i}</CallerReference></InvalidationBatch>"
+	  req = Net::HTTP::Post.new(uri.path)
+	  req.initialize_http_header({
+	    'x-amz-date' => date,
+	    'Content-Type' => 'text/xml',
+	    'Authorization' => "AWS %s:%s" % [s3_access, Base64.encode64(digest.digest)]
+	  })
 
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true
-  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  res = http.request(req)
+	  req.body = "<InvalidationBatch>" + paths + "<CallerReference>ref_#{Time.now.utc.to_i}</CallerReference></InvalidationBatch>"
 
-  puts res.code
-  puts res.body
+	  http = Net::HTTP.new(uri.host, uri.port)
+	  http.use_ssl = true
+	  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+	  res = http.request(req)
+
+	  puts res.code
+	  puts res.body
+  end	  
 EORUBY
