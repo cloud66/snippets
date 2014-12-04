@@ -1,0 +1,3 @@
+# {{Description: This deploy hook snippet is a script that enables custom maintenance pages for Docker stacks.}} 
+
+cp $STACK_PATH/.cloud66/maintenance.html /etc/cloud66/pages/cloud66_maintenance.html
