@@ -1,5 +1,4 @@
 # {{Description: This snippet is a script that automates the installation of the ffmpeg package.}} 
-
 echo yes | sudo add-apt-repository ppa:mc3man/trusty-media
 sudo apt-get update -y
 sudo apt-get install -y ffmpeg
