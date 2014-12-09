@@ -1,4 +1,4 @@
-# {{Description: This deploy hook snippet is a script that automates the installation of the Node.}} 
+# {{Description: This snippet is a script that automates the installation of the Node.}} 
 sudo apt-get install software-properties-common python-software-properties -y
 echo -en "\n" | sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update -y --fix-missing || true
