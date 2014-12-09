@@ -1,5 +1,4 @@
 # {{Description: This deploy hook snippet is a script that automates the recompilation of Passenger with Nginx together with a module specified with the MODULE_URL environment variable. Note: given the "sudo service nginx stop" command, your web server will have some downtime when this script runs (unless you run it during stack build).}} 
-
 if [ -z "$MODULE_URL" ]
 then
     >&2 echo "Please set your $MODULE_URL environment variable"
