@@ -1,5 +1,4 @@
 # {{Description: This snippet is a script that automates the invalidation of Cloudfront assets.}} 
-
 /usr/bin/env ruby <<-EORUBY
   require 'rubygems'
   require 'hmac-sha1'
