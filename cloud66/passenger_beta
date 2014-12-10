@@ -1,0 +1,4 @@
+cd $STACK_PATH
+sudo gem uninstall passenger -a -I -x
+sudo gem install passenger --pre
+sudo passenger-install-nginx-module --auto --auto-download --prefix=/opt/nginx --extra-configure-flags='--with-http_realip_module'
