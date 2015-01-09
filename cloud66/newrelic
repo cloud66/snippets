@@ -14,7 +14,7 @@ else
 		
 		sudo wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
 		sudo apt-get update -y
-		sudo apt-get install newrelic-sysmond -y
+		sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\" install newrelic-sysmond
 
         sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
         sudo /etc/init.d/newrelic-sysmond start
