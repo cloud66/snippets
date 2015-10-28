@@ -1,14 +1,14 @@
 # {{Description: This deploy hook will run the following code snippet to automate the installation of PG client tools. POSTGRESQL_VERSION environment variable will be used if supplied.}} 
 if [ -z "$POSTGRESQL_VERSION" ]
 then
-  VERSION=$POSTGRESQL_VERSION
+  VERSION="$POSTGRESQL_VERSION"
 else
   VERSION="9.4"
 fi
         
 if [ -s /etc/apt/sources.list.d/pgdg.list ]
 then
-	sudo rm -f /etc/apt/sources.list.d/pgdg.list
+  sudo rm -f /etc/apt/sources.list.d/pgdg.list
 fi
 echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" | sudo tee -a /etc/apt/sources.list.d/pgdg.list
 
