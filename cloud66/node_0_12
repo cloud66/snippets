@@ -1,4 +1,4 @@
-# {{Description: This deploy hook will run the following code snippet to automate the installation of node.}} 
+# {{Description: This deploy hook will run the following code snippet to automate the installation of the Node.}} 
 sudo apt-get install software-properties-common python-software-properties -y
 curl -sL https://deb.nodesource.com/setup | sudo bash -
 sudo apt-get install -y nodejs
