@@ -1,4 +1,4 @@
-# {{Description: This deploy hook will run the following code snippet to automate the installation of PG client tools. POSTGRESQL_VERSION environment variable will be used if supplied.}} 
+# {{Description: This deploy hook will run the following code snippet to automate the installation of PostgreSQL client tools. The POSTGRESQL_VERSION environment variable will be used if supplied.}} 
 if [ -z "$POSTGRESQL_VERSION" ]
 then
   version="9.4"
