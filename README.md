@@ -24,6 +24,7 @@ production: # Environment or your choice
       target: docker 
       sudo: true 
       execute: true
+      run_on: all_servers #make sure weave scope is running on all servers and communicate to each other
 ```
 
 *Warning:* Weavescope will run on port 4040 which is not exposed to the outside world. If you want to access the UI change your firewall settings allowing traffic to port 4040. Make sure only you can access weavescope from your ip-address. With weavescope you can control all your running process and excute inside running containers. Take good care of those powers!
