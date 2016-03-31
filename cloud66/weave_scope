@@ -1,0 +1,2 @@
+# {{Description: This deploy hook will run the following code snippet to automates the installation of Weave Scope (a monitoring, visualisation & management tool for Docker).}}
+docker run --privileged -d --name=weavescope --net=host --pid=host -v /var/run/docker.sock:/var/run/docker.sock -e CHECKPOINT_DISABLE weaveworks/scope:latest --probe.docker true
