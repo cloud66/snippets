@@ -21,7 +21,7 @@ If you want to install [weavescope](https://www.weave.works/products/weave-scope
 production: # Environment or your choice
   last_thing: # Importent to run the weavescope hook as the last thing during server deployment
     - snippet: cloud66/weave_scope # our weavescope snippet
-      target: any 
+      target: docker 
       sudo: true 
       execute: true
 ```
