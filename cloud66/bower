@@ -1,3 +1,4 @@
-# {{Description: This deploy hook will run the following code snippet to automates the installation of the Bower package manager.}} 
+# {{Description: This deploy hook will run the following code snippet to automates the installation of the Bower package manager.}}
+sudo apt-get install -y git-core nodejs npm nodejs-legacy
 sudo npm install -g bower
 yes | bower install --allow-root
