@@ -1,0 +1,20 @@
+# {{Description: This snippet will automate the installation of Node.js v7.x}}
+
+# Verify Node.js 7.x - exit if already installed
+if (which nodejs > /dev/null && (nodejs -v | grep -q 'v7.')) then
+  exit
+fi
+
+# Remove old package version
+if (dpkg -l nodejs > /dev/null) then
+  sudo apt-get remove -y nodejs
+fi
+
+# Remove old apt source
+sudo rm -f /etc/apt/sources.list.d/nodesource.list
+
+# Add new apt source
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+
+# Install Node.js 7.x
+sudo apt-get install -y nodejs
