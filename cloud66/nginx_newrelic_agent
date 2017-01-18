@@ -1,0 +1,27 @@
+# {{Description: This deploy hook will run the following code snippet to automate the installation of NewRelic Nginx plugin, and requires NEWRELIC_KEY and NEWRELIC_NGINX_NAME environment variables to be set on a stack.}}
+if [ -z "$NEWRELIC_KEY" ]
+then
+    >&2 echo "Please set your NEWRELIC_KEY environment variable"
+    exit 1
+elif [ -z "$NEWRELIC_NGINX_NAME" ]
+then
+    >&2 echo "Please set your NEWRELIC_NGINX_NAME environment variable"
+    exit 1
+else
+    if [ -s /etc/apt/sources.list.d/nginx.list ]
+		then
+        	sudo rm -f /etc/apt/sources.list.d/nginx.list
+          echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" | sudo tee -a /etc/apt/sources.list.d/nginx.list
+		else
+          echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" | sudo tee -a /etc/apt/sources.list.d/nginx.list
+		fi
+
+		sudo wget -O- http://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+		sudo apt-get update -y
+		sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install nginx-nr-agent crudini
+
+    sudo crudini --set --existing /etc/nginx-nr-agent/nginx-nr-agent.ini global newrelic_license_key $NEWRELIC_KEY
+    sudo crudini --set /etc/nginx-nr-agent/nginx-nr-agent.ini source1 name $NEWRELIC_NGINX_NAME
+    sudo crudini --set /etc/nginx-nr-agent/nginx-nr-agent.ini source1 url http://127.0.0.1:8559/status
+    sudo /etc/init.d/nginx-nr-agent start
+fi
