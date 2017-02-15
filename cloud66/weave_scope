@@ -1,4 +1,10 @@
-# {{Description: This deploy hook will run the following code snippet to automates the installation of Weave Scope (a monitoring, visualisation & management tool for Docker).}}
-sudo wget -O /usr/local/bin/scope https://git.io/scope
-sudo chmod a+x /usr/local/bin/scope
-sudo scope launch
+# {{Description: This deploy hook will run the following code snippet to automates the installation of Weave Scope (a monitoring, visualisation & management tool for Docker) and requires the WEAVE_SCOPE_TOKEN environment variable to be set on a stack.}}
+if [ -z "$WEAVE_SCOPE_TOKEN" ]
+then
+        >&2 echo "Please set your WEAVE_SCOPE_TOKEN environment variable"
+        exit 1
+else
+        sudo wget -O /usr/local/bin/scope https://git.io/scope
+        sudo chmod a+x /usr/local/bin/scope
+        scope launch --service-token=$WEAVE_SCOPE_TOKEN
+fi
