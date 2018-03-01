@@ -1,0 +1,27 @@
+# {{Description: This deploy hook will run the following code snippet to automate the download of content from a predefined url to a predefined location}} 
+if [ -z "$SOURCE_URL" ] || [ -z "$TARGET_PATH" ]
+then
+  >&2 echo "Please set your SOURCE_URL and TARGET_PATH environment variables"
+  exit 1
+else
+  # check if we must untar
+  must_untar=${UNTAR:-"true"}    
+  
+  echo "**Cloud 66: Source Download Snippet**"
+  echo "SOURCE_URL: $SOURCE_URL"    
+  echo "TARGET_PATH: $TARGET_PATH"    
+  echo "UNTAR: $must_untar"
+  
+  if [[ "$must_untar" == "true" ]]
+  then
+    temp_path="/tmp/snippet-$(date +%s)"
+    sudo wget -O "$temp_path" "$SOURCE_URL"
+    sudo mkdir -p "$TARGET_PATH"
+    sudo tar xvzf "$temp_path" -C "$TARGET_PATH" --strip 1    
+    sudo rm -f "$temp_path"
+  else
+    sudo wget -O "$TARGET_PATH" "$SOURCE_URL"
+  fi
+
+  echo "**Complete**"
+fi
