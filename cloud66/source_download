@@ -15,12 +15,12 @@ else
   if [[ "$must_untar" == "true" ]]
   then
     temp_path="/tmp/snippet-$(date +%s)"
-    sudo wget -O "$temp_path" "$SOURCE_URL"
-    sudo mkdir -p "$TARGET_PATH"
-    sudo tar xvzf "$temp_path" -C "$TARGET_PATH" --strip 1    
-    sudo rm -f "$temp_path"
+    wget -O "$temp_path" "$SOURCE_URL"
+    mkdir -p "$TARGET_PATH"
+    tar xvzf "$temp_path" -C "$TARGET_PATH" --strip 1    
+    rm -f "$temp_path"
   else
-    sudo wget -O "$TARGET_PATH" "$SOURCE_URL"
+    wget -O "$TARGET_PATH" "$SOURCE_URL"
   fi
 
   echo "**Complete**"
