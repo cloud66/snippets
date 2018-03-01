@@ -1,7 +1,7 @@
 # {{Description: This deploy hook will run the following code snippet to automate the download of content from a predefined url to a predefined location}} 
 if [ -z "$SOURCE_URL" ] || [ -z "$TARGET_PATH" ]
 then
-  >&2 echo "Please set your SOURCE_URL and TARGET_PATH environment variables"
+  >&2 echo "Error! Please set your SOURCE_URL and TARGET_PATH environment variables"
   exit 1
 else
   # check if we must untar
