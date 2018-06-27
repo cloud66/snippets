@@ -4,18 +4,12 @@ then
         >&2 echo "Please set your NEWRELIC_KEY environment variable"
         exit 1
 else
-        if [ -s /etc/apt/sources.list.d/newrelic.list ]
-		then
-        	sudo rm -f /etc/apt/sources.list.d/newrelic.list
-        	echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
-		else
-        	echo "deb http://apt.newrelic.com/debian/ newrelic non-free" | sudo tee -a /etc/apt/sources.list.d/newrelic.list
-		fi
-		
-		sudo wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
-		sudo apt-get update -y
-		sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install newrelic-sysmond
+	echo "license_key: ${NEWRELIC_KEY}" | sudo tee -a /etc/newrelic-infra.yml
+	curl https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
+	cat /etc/lsb-release
 
-        sudo nrsysmond-config --set license_key=$NEWRELIC_KEY
-        sudo /etc/init.d/newrelic-sysmond start
+	printf 'deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt xenial main' | sudo tee -a /etc/apt/sources.list.d/newrelic-infra.list
+
+	sudo apt update
+	sudo apt install newrelic-infra -y
 fi
