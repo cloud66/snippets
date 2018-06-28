@@ -4,11 +4,11 @@ then
         >&2 echo "Please set your NEWRELIC_KEY environment variable"
         exit 1
 else
-	echo "license_key: ${NEWRELIC_KEY}" | sudo tee /etc/newrelic-infra.yml
+	echo "license_key: ${NEWRELIC_KEY}" > /etc/newrelic-infra.yml
 	curl https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
 
-	printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/newrelic-infra.list
+	printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list.d/newrelic-infra.list
 
 	sudo apt update
-	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install newrelic-infra
+	sudo apt install newrelic-infra -y
 fi
