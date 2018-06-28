@@ -1,21 +1,14 @@
-# {{Description: This deploy hook will run the following code snippet to automate the installation of NewRelic, and requires the NEWRELIC_KEY environment variable to be set on a stack.}}
+# {{Description: This deploy hook will run the following code snippet to automate the installation of NewRelic, and requires the NEWRELIC_KEY environment variable to be set on a stack.}} 
 if [ -z "$NEWRELIC_KEY" ]
 then
         >&2 echo "Please set your NEWRELIC_KEY environment variable"
         exit 1
 else
-        if [ -s /etc/apt/sources.list.d/newrelic-infra.list ]
-		then
-        	sudo rm -f /etc/apt/sources.list.d/newrelic-infra.list
-          printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt trusty main" | sudo tee -a /etc/apt/sources.list.d/newrelic-infra.list
-		else
-          printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt trusty main" | sudo tee -a /etc/apt/sources.list.d/newrelic-infra.list
-		fi
+	echo "license_key: ${NEWRELIC_KEY}" | sudo tee /etc/newrelic-infra.yml
+	curl https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
 
-    printf "license_key: %s\n" "$NEWRELIC_KEY" | sudo tee -a /etc/newrelic-infra.yml
+	printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/newrelic-infra.list
 
-		sudo wget -O- https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
-		sudo apt-get update -y
-		sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install newrelic-infra
-    sudo initctl start newrelic-infra
+	sudo apt update
+	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install newrelic-infra
 fi
