@@ -9,6 +9,6 @@ else
 
 	printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/newrelic-infra.list
 
-	sudo apt update
+	sudo apt-get update -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install newrelic-infra
 fi
