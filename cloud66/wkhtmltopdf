@@ -1,3 +1,7 @@
-# {{Description: This deploy hook will run the following code snippet to automate the installation of wkhtmltopdf.}} 
-sudo apt-get update -y
-sudo apt-get install wkhtmltopdf -y
+# {{Description: This deploy hook will run the following code snippet to automate the installation of wkhtmltopdf.}}
+# download the latest wkhtmltopdf version
+curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.$(lsb_release -cs)_amd64.deb >> /tmp/wkhtmltopdf.deb
+# install the wkhtmltopdf package
+sudo dpkg -i /tmp/wkhtmltopdf.deb
+# install the package dependencies
+sudo apt install --fix-broken -y
