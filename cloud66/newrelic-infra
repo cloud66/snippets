@@ -9,6 +9,15 @@ then
 fi
 
 case $UBUNTU_VERSION in
+  20.04 )
+    printf "license_key: %s\n" "$NEWRELIC_KEY" | sudo tee /etc/newrelic-infra.yml
+    curl https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
+    printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt focal main" | sudo tee /etc/apt/sources.list.d/newrelic-infra.list
+    sudo apt-get update
+    sudo apt-get install newrelic-infra -y
+    Message="New relic is installed successfully for Ubuntu 20.04"
+    echo $Message
+    ;;
   18.04 )
     printf "license_key: %s\n" "$NEWRELIC_KEY" | sudo tee /etc/newrelic-infra.yml
     curl https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
