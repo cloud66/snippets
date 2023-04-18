@@ -1,6 +1,9 @@
 # {{Description: This deploy hook will run the following code snippet to automate the installation of Yarn.}} 
 # {{Description: NodeJS should be installed }}
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt-get update -y
-sudo apt-get install yarn -y
+# ********************************************************************************
+# *** THIS SNIPPET IS NOW DEPRECATED. CLOUD 66 WILL AUTOMATICALLY INSTALL YARN ***
+# ********************************************************************************
+# curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+# echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+# sudo apt-get update -y
+# sudo apt-get install yarn -y
