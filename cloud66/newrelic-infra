@@ -9,6 +9,15 @@ then
 fi
 
 case $UBUNTU_VERSION in
+  24.04 )
+    printf "license_key: %s\n" "$NEWRELIC_KEY" | sudo tee /etc/newrelic-infra.yml
+    curl -fsSL https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/newrelic-infra.gpg
+    echo "deb https://download.newrelic.com/infrastructure_agent/linux/apt/ noble main" | sudo tee -a /etc/apt/sources.list.d/newrelic-infra.list
+    sudo apt-get update
+    sudo apt-get install newrelic-infra -y
+    Message="New relic is installed successfully for Ubuntu 24.04"
+    echo $Message
+    ;;
   22.04 )
     printf "license_key: %s\n" "$NEWRELIC_KEY" | sudo tee /etc/newrelic-infra.yml
     curl https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add -
